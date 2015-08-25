@@ -235,7 +235,7 @@ class UriGeneratorAndResolver implements SingletonInterface {
 			/** @noinspection PhpUndefinedMethodInspection */
 			list($cachedPagePath) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('pagepath', 'tx_realurl_pathcache',
 				'page_id=' . intval($pageid) .
-				' AND language_id=' . intval($lang) .
+				' AND language_id=' . intval($this->pObj->pObj->sys_language_uid) .
 				' AND rootpage_id=' . intval($this->conf['rootpage_id']) .
 				' AND mpvar=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($mpvar, 'tx_realurl_pathcache') .
 				' AND expire=0', '', '', 1);
@@ -285,7 +285,7 @@ class UriGeneratorAndResolver implements SingletonInterface {
 		if ($canCachePaths && $newPathDiffers) {
 			/** @noinspection PhpUndefinedMethodInspection */
 			$cacheCondition = 'page_id=' . intval($pageId) .
-				' AND language_id=' . intval($langId) .
+				' AND language_id=' . intval($this->pObj->pObj->sys_language_uid) .
 				' AND rootpage_id=' . intval($rootPageId) .
 				' AND mpvar=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($mpvar, 'tx_realurl_pathcache');
 
@@ -417,7 +417,7 @@ class UriGeneratorAndResolver implements SingletonInterface {
 			if ($createCount['t'] == 0) {
 				$insertArray = array(
 					'page_id' => $pageId,
-					'language_id' => $langId,
+					'language_id' => $this->pObj->pObj->sys_language_uid,
 					'pagepath' => $currentPagePath,
 					'expire' => 0,
 					'rootpage_id' => $rootPageId,
@@ -580,7 +580,7 @@ class UriGeneratorAndResolver implements SingletonInterface {
 				/** @noinspection PhpUndefinedMethodInspection */
 				list($cachedPagePath) = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('pagepath', 'tx_realurl_pathcache',
 								'page_id=' . intval($page['uid']) .
-								' AND language_id=' . intval($lang) .
+								' AND language_id=' . intval($this->pObj->pObj->sys_language_uid) .
 								' AND rootpage_id=' . intval($this->conf['rootpage_id']) .
 								' AND mpvar=' . $GLOBALS['TYPO3_DB']->fullQuoteStr($page['_MP_PARAM'], 'tx_realurl_pathcache') .
 								' AND expire=0', '', '', 1);
